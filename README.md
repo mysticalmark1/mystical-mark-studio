@@ -1,10 +1,14 @@
 # Mystical Mark Studio
 
-**A private, self-hosted creator workspace — version 1.1.0.**
+**A private, self-hosted creator workspace — version 1.1.1.**
 
 Organize source files, prepare AI handoffs, review forecast claims, write scripts and keep reusable outputs in one place. This project is released for transparency, inspection, modification and sharing under **AGPL-3.0-or-later**, matching the companion astrology project's license choice. It is a separate app; it does not include Swiss Ephemeris or calculate charts.
 
 The public release contains application source and synthetic examples. It contains no creator account, personal content bank, private description block, credentials or client files. New installs start with an empty planner. Existing installations retain their saved content and migrate their old embedded creator instructions into private database settings.
+
+## Monthly reviews with large source sets
+
+Version 1.1.1 removes the combined 750,000-character cap for manual Work tasks. Select all weekly registers and assessments together and prepare one monthly task. The downloaded `TASK.md` includes every selected text source in full, in selection order. Nothing is summarized, truncated or split. The existing 40-source selection limit and 25 MB per-upload limit remain. Direct API mode retains its separate safeguard and directs large reviews to Work mode. ChatGPT itself may impose file/context limits; this change removes Studio’s local cap and does not guarantee a receiving model’s capacity.
 
 ## Features
 
@@ -60,10 +64,10 @@ sudo apt update
 sudo apt install python3 python3-venv python3-pip
 ```
 
-Download and extract a release, or clone your chosen public fork:
+Download and extract a release, or clone your chosen public fork. Replace `YOUR_USERNAME` below with the repository owner:
 
 ```bash
-git clone https://github.com/mysticalmark1/mystical-mark-studio.git
+git clone https://github.com/YOUR_USERNAME/mystical-mark-studio.git
 cd mystical-mark-studio
 bash install.sh
 ```
@@ -146,5 +150,3 @@ The login page and app footer offer **License** and **Download source** links. `
 This project's original code, documentation and bundled prompt templates are **GNU AGPL version 3 or later**, without warranty; see [LICENSE](LICENSE) and [NOTICE](NOTICE). Third-party packages retain their own licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The license does not transfer ownership of uploaded/generated content or require publishing private user data. No additional restriction on commercial use or field of use is imposed.
 
 Preserve notices and provide the corresponding source when the license requires it, including for modified versions used over a network. Keep the source offer aligned with the version actually served. [GNU's AGPL text](https://www.gnu.org/licenses/agpl-3.0.html) is authoritative. An AGPL license promotes access to source; it does not guarantee ethical use or prevent every misuse.
-
-To publish the clean release folder on GitHub, follow [PUBLISHING.md](docs/PUBLISHING.md), including GitHub no-reply email settings, staged-file review and release tagging. Do not initialize a repository inside your private data or installed release directory.

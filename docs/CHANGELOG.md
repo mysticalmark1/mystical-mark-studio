@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.1 — 2026-11-01
+
+- Fix monthly Work-task creation failing when combined registers and assessments exceed 750,000 characters. Manual handoffs now preserve all selected text in one complete task without that aggregate cap.
+- Keep the direct API safeguard separate, with instructions to switch to Work rather than split the review.
+- Add regression coverage for four registers plus four assessments above the old cap, downloaded packet contents, private-source consent and API-mode handling.
+- No database/schema, credentials, private-profile or HTTPS changes.
+- Update SSH GitHub publishing, rsync and release-tag instructions.
+
+
 ## 1.1.0 — 2026-10-15
 
 - Release original code, docs and prompt templates under AGPL-3.0-or-later; add full license, notices and visible license/source links.

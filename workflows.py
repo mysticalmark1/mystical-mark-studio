@@ -47,7 +47,10 @@ def build_prompt(store,kind,body):
         value=store.bytes(id_).decode('utf-8-sig')
         chars+=len(value)
         sources.append(f"\n--- SOURCE {f['name']} | id={id_} | sha256={f['sha256']} ---\n{value}\n--- END SOURCE ---")
-    if chars>750000: raise ValueError('Selected sources exceed 750,000 characters. Split the review into smaller batches; no text has been truncated.')
+    # A local Work packet is a file handoff, not an API context window.
+    # Keep every selected source in one task; never truncate or split monthly evidence.
+    if chars>750000 and store.get('preferences',{}).get('mode')=='api':
+        raise ValueError('Selected sources exceed the direct API safeguard of 750,000 characters. Switch Settings to work mode to prepare one complete Work task with every selected source. No text has been truncated.')
     if kind in ('long','short','register','reading','guidance') and not any(store.file(i)['name'].lower().endswith(('.srt','.vtt','.txt')) for i in chosen):
         raise ValueError('Select a transcript (.srt, .vtt or .txt).')
     if kind in ('weekly','monthly','yearly') and not chosen: raise ValueError('Select the registers and available assessment records for this review.')

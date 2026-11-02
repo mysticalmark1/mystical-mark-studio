@@ -63,7 +63,7 @@ Save scripts in **Writing room**. Each save keeps the preceding revision; the re
 
 **Turn into X / Threads posts** preserves every word and its order. It normalises whitespace and splits at word boundaries with conservative limits (X: 280 weighted budget; Threads: 500 UTF-16 units). It does not add numbering or replace your guidance with a summary/link. A single overlong word/URL triggers an error rather than being dropped. You can edit each segment before saving.
 
-Client workflow: upload the transcript as **private**, prepare the Client readings task, import the summary, and open it in File space. Use **Edit a copy** to revise it if needed, then **Create client PDF** after reviewing its faithfulness. The PDF is generated locally and saved private. It does not email the client.
+Client workflow: upload the transcript as **private**, prepare the Client readings task, import the summary, and open it in File space. Use **Edit a copy** to revise it if needed, then **Create client PDF** after reviewing its faithfulness. The PDF is generated locally and saved private. It does not email the client. The layout follows the earlier quick-reference structure without including Jenn's personal reading in this distribution.
 
 ### Optional X / Threads direct publishing
 
@@ -92,3 +92,7 @@ Reimporting the same platform/account/content/date/metric/basis replaces that ob
 
 Export CSV or prepare a Work analysis packet. No analytics are fabricated for disconnected accounts.
 
+
+## Large monthly Work tasks (1.1.1)
+
+In Settings choose `work`. Select all four weekly registers and all four assessments, then prepare one monthly task. The old combined-text limit no longer applies to manual Work handoffs. Download the packet and attach its complete TASK.md in one Work conversation. All source text remains in that file; no splitting or truncation occurs. Recreate a task that previously failed to prepare after updating. Already saved tasks keep their frozen prompts. Direct API mode retains its 750,000-character guard; use Work for larger reviews. Receiving-service upload and model-context limits still apply independently.

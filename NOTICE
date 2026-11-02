@@ -21,3 +21,5 @@ Third-party components retain their own copyright and license notices.
 See THIRD_PARTY_NOTICES.md. No additional field-of-use restrictions apply.
 
 Release 1.1.0 (2026-10-15) adds public-release documentation, private profile migration, portable startup, license notices and source distribution. See docs/CHANGELOG.md.
+
+Release 1.1.1 (2026-11-01) removes the aggregate source-text cap for manual Work handoffs and updates tests/publishing documentation.

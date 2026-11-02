@@ -29,6 +29,52 @@ class StudioTests(unittest.TestCase):
     def tearDown(self): self.tmp.cleanup()
     def post(self,path,data): return self.c.post('/api/'+path,json=data,headers={'X-CSRF-Token':self.csrf})
     def transcript(self,private=False):return self.store.add_file('week.srt',SRT,'transcript',private=private)
+    def monthly_sources(self,private=False):
+        sources=[]
+        for week in range(1,5):
+            for kind in ('register','assessment'):
+                text=f'# Week {week} {kind} START\n'+(f'Week {week} {kind} evidence — preserve every word. 💜\n'*3000)+f'END week {week} {kind}'
+                id_=self.store.add_file(f'week-{week}-{kind}.md',text,kind,private=private)
+                sources.append((id_,text))
+        self.assertGreater(sum(len(text) for _,text in sources),750000)
+        return sources
+    def test_monthly_work_packet_preserves_all_eight_large_sources(self):
+        sources=self.monthly_sources()
+        response=self.post('jobs',{'kind':'monthly','title':'Complete month','file_ids':[id_ for id_,_ in sources]})
+        self.assertEqual(response.status_code,200,response.json)
+        job=self.store.jobs()[0];self.assertEqual(job['state'],'waiting_work')
+        self.assertEqual(job['body']['file_ids'],[id_ for id_,_ in sources])
+        response=self.c.get('/api/jobs/'+response.json['id']+'/packet')
+        self.assertEqual(response.status_code,200)
+        with zipfile.ZipFile(io.BytesIO(response.data)) as z:
+            task=z.read('TASK.md').decode('utf-8')
+        self.assertEqual(task,job['body']['prompt'])
+        self.assertEqual(task.count('--- SOURCE '),8)
+        positions=[]
+        for id_,text in sources:
+            self.assertEqual(task.count(text),1)
+            positions.append(task.index(text))
+        self.assertEqual(positions,sorted(positions))
+        self.assertIn('Requested mode: monthly.',task)
+    def test_large_sources_in_api_mode_offer_one_work_handoff(self):
+        sources=self.monthly_sources();self.store.set('preferences',{'mode':'api'})
+        response=self.post('jobs',{'kind':'monthly','file_ids':[id_ for id_,_ in sources]})
+        self.assertEqual(response.status_code,400)
+        self.assertIn('one complete Work task',response.json['error'])
+        self.assertNotIn('Split',response.json['error']);self.assertEqual(self.store.jobs(),[])
+        self.store.set('preferences',{'mode':'work'})
+        response=self.post('jobs',{'kind':'monthly','file_ids':[id_ for id_,_ in sources]})
+        self.assertEqual(response.status_code,200)
+    def test_large_work_sources_still_require_private_consent(self):
+        sources=self.monthly_sources(private=True)
+        body={'kind':'monthly','file_ids':[id_ for id_,_ in sources]}
+        self.assertEqual(self.post('jobs',body).status_code,400)
+        self.assertEqual(self.post('jobs',{**body,'include_private':True}).status_code,200)
+    def test_large_work_prompt_survives_reopening_store(self):
+        sources=self.monthly_sources()
+        self.assertEqual(self.post('jobs',{'kind':'monthly','file_ids':[id_ for id_,_ in sources]}).status_code,200)
+        reopened=Store(self.path).jobs()[0]
+        for _,text in sources:self.assertIn(text,reopened['body']['prompt'])
     def test_fresh_store_contains_only_test_fixture(self):
         ideas=self.store.entities('idea');self.assertEqual(len(ideas),1);self.assertEqual(ideas[0]['title'],'Synthetic idea')
     def test_seed_does_not_overwrite_edits(self):

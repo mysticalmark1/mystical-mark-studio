@@ -1,3 +1,9 @@
+# Validation — Studio 1.1.1
+
+Verified 2026-11-01: all 47 Python tests passed on Linux/Python 3.12. New regression coverage prepares one monthly task with four registers and four assessments above 750,000 combined characters, downloads TASK.md, and checks exact full text, single occurrence and selection order for every source. Also checks persisted task reopening, private-source consent, and switching from the API safeguard to a complete Work handoff. No external AI requests or social posts were made. No database or installer changes were needed for this patch. Receiving-service file/model limits are independent of this fix.
+
+The earlier verification record and platform limitations follow.
+
 # Validation — Studio 1.1.0
 
 Release verification: 2026-10-15. This records checks actually performed, not a claim of deployment on every platform.
